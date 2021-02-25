@@ -3,7 +3,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 # %%
-coords_dir = Path('center_of_mass/com_labels')
+coords_dir = Path('labels')
 images_dir = Path('data')
 # %%
 def get_images_and_labels(idx=1):
