@@ -48,5 +48,15 @@ learn.fine_tune(6)
 # %%
 learn.show_results(max_n=6, figsize=(7,8))
 # %%
+import matplotlib.pyplot as plt
 out = learn.predict(fnames[0])
+# %%
+def show_res(fn):
+  im = np.array(PILMask.create(fn))
+  out = learn.predict(fnames[0])[1]
+  f, axs = plt.subplots(1,2, figsize=(8,8))
+  axs[0].imshow(im, cmap='gray')
+  axs[1].imshow(out)
+
+show_res(fnames[1])
 # %%
