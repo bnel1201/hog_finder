@@ -7,16 +7,18 @@ import matplotlib.pyplot as plt
 img_dir = Path(r'data')
 mask_dir = Path(r'masks')
 
-masks = mask_dir.rglob('*.nrrd')
-imgs = img_dir.rglob('*.png')
-
-mask = nrrd.read(list(masks)[0])[0]
+masks = list(mask_dir.glob('*.nrrd'))
+img_dirs = list(img_dir.glob('*'))
 # %%
-outdir = Path("labels")
-outdir.mkdir(exist_ok=True)
+base_outdir = Path("labels")
 
-for i in range(mask.shape[-1]):
-    fname = outdir / f"m_{i+1}.png"
-    plt.imsave(fname, mask[..., i].T, cmap='gray')
+for msk in masks:
+    outdir = base_outdir / msk.stem
+    outdir.mkdir(exist_ok=True, parents=True)
+    print(outdir)
+    mask = nrrd.read(msk)[0]
+    for i in range(mask.shape[-1]):
+        fname = outdir / f"m_{i+1}.png"
+        plt.imsave(fname, mask[..., i].T, cmap='gray')
 
 # %%
