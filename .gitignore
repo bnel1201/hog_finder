@@ -3,3 +3,8 @@ labels
 masks
 videos
 .vscode/
+*/**.mp4
+
+*__pycache__*
+**.ipynb_checkpoints
+models
