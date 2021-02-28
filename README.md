@@ -2,7 +2,7 @@
 
 ## Making dataset
 
-- mp4 to png done with [video to png](video_to_png.bat)
+- mp4 to png done with [convert_video.bat](convert_videos.bat)
 - segmentations done with [slicer](https://www.slicer.org/)
 
 ![slicer annotation](segmentation/slicer_annotation.jpg)
