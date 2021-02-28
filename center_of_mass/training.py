@@ -2,6 +2,7 @@
 from fastai.vision.all import *
 import pandas as pd
 
+
 path = Path('data')
 (path/'1').ls()
 # %%
@@ -22,22 +23,24 @@ def get_ctr(f):
     return tensor([x,y])
 # %%
 shrink_factor = 4
-biwi = DataBlock(
+hog = DataBlock(
     blocks=(ImageBlock, PointBlock),
     get_items=get_image_files,
     get_y=get_ctr,
-    item_tfms=Resize((1080//shrink_factor, 1920//shrink_factor)),
-    batch_tfms=[Normalize.from_stats(*imagenet_stats)]
+    splitter = RandomSplitter(),
+    item_tfms=Resize((1080//shrink_factor, 1920//shrink_factor), method='squeeze')
 )
 # %%
-dls = biwi.dataloaders(path)
+dls = hog.dataloaders(path)
 dls.show_batch(max_n=9, figsize=(8,6))
 # %%
-learn = cnn_learner(dls, resnet18, y_range=(-1,1))
+learn = cnn_learner(dls, resnet18, y_range=(-1,1), cbs=ShowGraphCallback())
 # %%
 # learn.lr_find()
 # %%
-learn.fine_tune(5, 1e-2)
+learn.fine_tune(50, 1e-3)
 # %%
 learn.show_results()
+# %%
+learn.show_training_loop()
 # %%

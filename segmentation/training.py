@@ -17,33 +17,30 @@ def label_func(fn):
   return path/"labels"/fn.parent.stem/f"m_{fn.stem}{fn.suffix}"
 
 
-def get_msk(fn, p2c):
+def get_msk(fn):
   "Grab a mask from a `filename` and adjust the pixels based on `pix2class`"
   fn = label_func(fn)
   msk = np.array(PILMask.create(fn))
-  mx = np.max(msk)
-  for i, val in p2c.items():
-    msk[msk==i] = val
+  levels = np.unique(msk)
+  for idx, level in enumerate(levels):
+    msk[msk==level] = idx
   return PILMask.create(msk)
 
-p2c = {0: 0, 255: 1}
+get_y = lambda o: get_msk(o)
 
-
-get_y = lambda o: get_msk(o, p2c)
-
-codes = ['Background', 'Hog']
+codes = ['Background', 'Hog', 'Outline']
 
 hogvid = DataBlock(blocks=(ImageBlock, MaskBlock(codes)),
                    get_items=get_image_files,
                    splitter=RandomSplitter(),
                    get_y=get_y,
-                   item_tfms=Resize(224))
+                   item_tfms=Resize(224*2, method='squeeze'))
 
-dls = hogvid.dataloaders(path / "data", path=path, bs=8)
+dls = hogvid.dataloaders(path / "data", path=path, bs=4)
 # %%
 dls.show_batch(max_n=6)
 # %%
-learn = unet_learner(dls, resnet34)
+learn = unet_learner(dls, resnet34, cbs=ShowGraphCallback())
 learn.fine_tune(6)
 # %%
 learn.show_results(max_n=6, figsize=(7,8))
