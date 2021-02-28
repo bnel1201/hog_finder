@@ -26,6 +26,8 @@ python segmentation/hogfinder.py path/to/hedgehog_video.mp4
 
 ![finder gif](hog_finder.gif)
 
+- gif made with [make_preview_gif.bat](segmentation/make_preview_gif.bat)
+
 ### Analysis
 
 - using the segmentation maps generated with [hedgiefinder](segmentation/hedgiefinder.py), Xiaomi's location over time can be tracked as the coordinates (x, y) at the center of each segmentation, (found using [sci-kit image regionprops](https://scikit-image.org/docs/dev/api/skimage.measure.html))
