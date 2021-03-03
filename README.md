@@ -5,7 +5,7 @@
 - mp4 to png done with [convert_video.bat](convert_videos.bat)
 - segmentations done with [slicer](https://www.slicer.org/)
 
-![slicer annotation](segmentation/slicer_annotation.jpg)
+![slicer annotation](slicer_annotation.jpg)
 
 - The annotations were saved as `.nrrd` in the [mask directory](segmentation/masks)
 - Then converted to `.png` files for training using [prepare_dataset.py](segmentation/prepare_dataset.py)
@@ -21,7 +21,7 @@
 - turned into a command line program using [hedgiefinder](segmentation/hedgiefinder.py):
 
 ```bash
-python segmentation/hogfinder.py path/to/hedgehog_video.mp4
+python segmentation/hedgiefinder.py path/to/hedgehog_video.mp4
 ```
 
 ![finder gif](hog_finder.gif)
