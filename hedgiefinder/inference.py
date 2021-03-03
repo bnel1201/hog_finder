@@ -36,8 +36,8 @@ def alpha_mask(img, mask):
 
 
 def process_image(model, fname):
-    out = model.predict(fname)[1].numpy()
     img = np.array(PILImage.create(fname))
+    out = model.predict(img)[1].numpy()
     return alpha_mask(img, out)
 
 
@@ -53,9 +53,9 @@ def process_video(model, png_dir):
     return processed_dir
 
 
-def export_to_video(processed_dir, fname):
+def export_to_video(processed_dir, fname, output_name=None):
     input_name = str(processed_dir) + f'\%05d.jpg'
-    output_name = f'{Path(fname).stem}_seg.mp4'
+    output_name = output_name or f'{Path(fname).stem}_seg.mp4'
     (
         ffmpeg
         .input(input_name)
@@ -65,14 +65,20 @@ def export_to_video(processed_dir, fname):
     return output_name
 
 
-def predict(test_video, model_name=default_model):
+def predict(test_video, model_name=default_model, fps=2, output_name=None):
+    """
+    predict(test_video, model_name=default_model, fps=2)
+
+    fps = frames per second, increase to have longer video with more frames,
+    warning will take longer to process until batch inference is implemented
+    """
     model = load_learner(model_dir/model_name)
-    png_dir = make_temp_pngs(test_video)
+    png_dir = make_temp_pngs(test_video, fps=fps)
     proc_dir = process_video(model, png_dir)
     video_name = f'{Path(test_video).stem}.mp4'
-    export_to_video(proc_dir, video_name)
+    output_name = export_to_video(proc_dir, video_name, output_name)
     rmtree(png_dir.parent)
-    return video_name
+    return output_name
 
 if __name__ == '__main__':
     model_name = default_model
