@@ -16,7 +16,7 @@ default_model = '20210302_2158.pkl'
 # https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#generate-thumbnail-for-video
 
 def make_temp_pngs(test_video, fps=2):
-    tempvid = Path(tempfile.gettempdir()) /'hogvid' / 'originals' /r'%05d.png'
+    tempvid = Path(tempfile.gettempdir()) /'hogvid' / 'originals' /r'%06d.png'
     tempvid.parent.mkdir(exist_ok=True, parents=True)
     (
         ffmpeg
@@ -47,14 +47,14 @@ def process_video(model, png_dir):
     nfiles = len(png_dir.ls())
     for idx, fname in enumerate(png_dir.ls()):
         img = process_image(model, fname)
-        PILImage.create(img).save(processed_dir/f'{idx:05}.jpg')
+        PILImage.create(img).save(processed_dir/f'{idx:06}.jpg')
         if idx%10 == 0:
             print(f'{idx} / {nfiles}')
     return processed_dir
 
 
 def export_to_video(processed_dir, fname, output_name=None):
-    input_name = str(processed_dir) + f'\%05d.jpg'
+    input_name = str(processed_dir) + f'\%06d.jpg'
     output_name = output_name or f'{Path(fname).stem}_seg.mp4'
     (
         ffmpeg
