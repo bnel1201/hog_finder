@@ -28,11 +28,16 @@ python segmentation/hedgiefinder.py path/to/hedgehog_video.mp4
 
 - gif made with [make_preview_gif.bat](segmentation/make_preview_gif.bat)
 
+### Continuous training
+
+![model assisted annotation](correcting_predictions_for_more_annotated_data.jpg)
+
+[prepare_dataset](data/prepare_dataset.py) includes option to convert corrected nrrd files 
 ### Analysis
 
 - using the segmentation maps generated with [hedgiefinder](segmentation/hedgiefinder.py), Xiaomi's location over time can be tracked as the coordinates (x, y) at the center of each segmentation, (found using [sci-kit image regionprops](https://scikit-image.org/docs/dev/api/skimage.measure.html))
   - [label_centers](center_of_mass/label_centers.py) is the relevant script for finding these coordinates
   - Finally, the sum of all these points over time is overlaid across a single from using [where_is_xiaomi.py](center_of_mass/where_is_xiaomi.py) to get a heat map of the night's activity
 
-![hedhedgehog activity map](center_of_mass/xiaomi_maps/xiaomi_map_1.png
-)
+![hedhedgehog activity map](center_of_mass/xiaomi_maps/xiaomi_map_1.png)
+

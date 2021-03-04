@@ -1,6 +1,6 @@
 from fastai.vision.all import *
 
-path = Path("../data")
+path = Path("../data/train")
 
 def label_func(fn):
   return path/"labels"/fn.parent.stem/f"m_{fn.stem}{fn.suffix}"
