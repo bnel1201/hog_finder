@@ -11,7 +11,7 @@ path = Path(os.path.dirname(__file__))
 model_dir = path / 'models'
 infer_dir = path / 'inference'
 
-default_model = '20210302_2158.pkl'
+default_model = '20210304_0025.pkl'
 
 # %%
 # https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#generate-thumbnail-for-video
