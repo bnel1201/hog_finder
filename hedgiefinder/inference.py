@@ -16,8 +16,6 @@ infer_dir = path / 'inference'
 default_model = sorted(model_dir.glob('*.pkl'), reverse=True)[0]
 default_model = f'{default_model.stem}{default_model.suffix}'
 
-# %%
-# https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#generate-thumbnail-for-video
 
 def make_temp_pngs(test_video, fps=2):
     tempvid = Path(tempfile.gettempdir()) /'hogvid' / 'originals' / r'%06d.png'
