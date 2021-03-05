@@ -58,6 +58,7 @@ def alpha_mask(originals, predictions):
     img[predictions==2, 1] = 255
     return img
 
+
 class HedgieFinder():
     def __init__(self, video, model_name=default_model, fps=2):
         self.video = Path(video)
@@ -69,8 +70,9 @@ class HedgieFinder():
     def __del__(self):
          rmtree(self.png_dir)
 
-    def predict(self):
-        test_dl = self.model.dls.test_dl(get_image_files(self.originals_dir))
+    def predict(self, fnames=None):
+        image_files = fnames or get_image_files(self.originals_dir)
+        test_dl = self.model.dls.test_dl(image_files)
         self.originals = np.stack([test_dl.create_item(idx)[0] for idx in test_dl.get_idxs()])
         preds = self.model.get_preds(dl=test_dl, with_decoded=True)[-1]
         zoom_factors = np.array(self.originals.shape[:-1])/np.array(preds.shape)
