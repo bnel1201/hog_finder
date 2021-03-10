@@ -49,4 +49,4 @@ from hedgiefinder import predict_overlay_url
    ...: lla/36/pile-of-poo_1f4a9.png', videoname = 'stinky_girl.mp4', sz = (100, 100))
 ```
 
-![star hog](notebooks\star_hog.mp4)
+![star hog](pizza.gif)
