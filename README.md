@@ -41,3 +41,12 @@ python segmentation/hedgiefinder.py path/to/hedgehog_video.mp4
 
 ![hedhedgehog activity map](center_of_mass/xiaomi_maps/xiaomi_map_1.png)
 
+## Other Applications
+
+```python
+from hedgiefinder import predict_overlay_url
+ predict_overlay_url('old/vid1.mp4', 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozi
+   ...: lla/36/pile-of-poo_1f4a9.png', videoname = 'stinky_girl.mp4', sz = (100, 100))
+```
+
+![star hog](notebooks\star_hog.mp4)

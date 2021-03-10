@@ -5,10 +5,10 @@ from shutil import rmtree
 import ffmpeg
 import nrrd
 from scipy.ndimage.interpolation import zoom
-from numpy import argmax
+from .overlays import insert_image, download, get_center
 
 from . import dataloading
-from .video import make_temp_pngs, video_to_png, png_to_video
+from .video import make_temp_pngs, array_to_png, png_to_video, array_to_video
 
 path = Path(os.path.dirname(__file__))
 model_dir = path / 'models'
@@ -46,8 +46,8 @@ class HedgieFinder():
         return self
 
     def export_to_video(self, savename=None):
-        video = alpha_mask(self.originals, self.predictions)
-        proc_dir = video_to_png(video, self.png_dir / 'processed')
+        video_array = alpha_mask(self.originals, self.predictions)
+        proc_dir = array_to_png(video_array, self.png_dir / 'processed')
         fname = savename or self.video.parent / f'{Path(self.video).stem}_seg.mp4'
         png_to_video(proc_dir, fname)
         return fname
@@ -65,6 +65,18 @@ class HedgieFinder():
 
 def predict(video, model_name=default_model, fps=2):
     return HedgieFinder(video, model_name, fps=fps).predict().export_to_video()
+
+
+def predict_overlay(video, overlay_file: str, videoname=None, model_name=default_model, fps=2, sz = (200, 200)):    
+    hf = HedgieFinder(video, model_name, fps=fps).predict()
+    originals, preds = hf.originals, hf.predictions
+    overlay_array = (insert_image(o, overlay_file, *get_center(p), sz = sz) for o,p in zip(originals, preds))
+    array_to_video(overlay_array, videoname)
+
+
+def predict_overlay_url(video, overlay_url: str, **kwargs):
+    overlay_file = download(overlay_url)    
+    predict_overlay(video, overlay_file, **kwargs)
 
 
 if __name__ == '__main__':

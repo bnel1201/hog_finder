@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 import tempfile
 from fastai.vision.all import PILImage
+from shutil import rmtree
+from os import remove
 
 import ffmpeg
 
@@ -20,23 +22,39 @@ def make_temp_pngs(test_video, fps=2):
     return tempvid.parent
 
 
-def video_to_png(video, savedir):
+def array_to_png(video, savedir):
     savedir.mkdir(exist_ok=True)
     for idx, frame in enumerate(video):
         PILImage.create(frame).save(savedir/f'{idx:06}.jpg')
     return savedir
 
 
-def png_to_video(processed_dir, output_name):
+def png_to_video(processed_dir, output_name, cleanup=False):
     input_name = str(Path(processed_dir) / r'%06d.jpg')
     print(input_name)
     (
         ffmpeg
         .input(input_name)
         .output(str(output_name))
+        .overwrite_output()
         .run()
     )
+    if cleanup:
+        rmtree(processed_dir)
     return output_name
+
+
+def array_to_video(array, videoname):
+    tempdir = Path(tempfile.mkdtemp())
+    array_to_png(array, tempdir)
+    return png_to_video(tempdir, videoname, cleanup=True)
+
+
+def array_to_gif(array, gifname):
+    vid = array_to_video(array, gifname)
+    gif = video_to_gif(vid, gifname)
+    remove(vid)
+    return gif
 
 
 def video_to_gif(video, fname=None):
