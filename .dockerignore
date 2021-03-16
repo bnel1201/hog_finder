@@ -1,0 +1,9 @@
+hedgiefinder_bnel1201.egg-info
+.vscode
+.pytest_cache
+.ipynb_checkpoints
+notebooks
+results
+data
+hedgiefinder\__pycache__
+hedgiefinder\.ipynb_checkpoints

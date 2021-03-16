@@ -50,3 +50,12 @@ from hedgiefinder import predict_overlay_url
 ```
 
 ![star hog](pizza.gif)
+
+### Making a web app
+
+- consider making a Docker image of the model and make a streamlit app
+- have upload option to upload single photo, group of photos or video
+- see result and then option to download as video or gif
+- option for overlay or segmentation
+- could host using digital ocean again: https://cloud.digitalocean.com/droplets/new?i=f7a007&size=s-4vcpu-8gb&region=sfo3
+- Alternatively can checkout this blog: <https://towardsdatascience.com/deploy-machine-learning-model-on-google-kubernetes-engine-94daac85108b>
