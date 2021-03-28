@@ -4,6 +4,7 @@ hedgiefinder_bnel1201.egg-info
 .ipynb_checkpoints
 notebooks
 results
-data
+data/masks
+data/videos
 hedgiefinder\__pycache__
 hedgiefinder\.ipynb_checkpoints

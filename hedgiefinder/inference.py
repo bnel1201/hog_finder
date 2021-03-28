@@ -13,8 +13,10 @@ path = Path(os.path.dirname(__file__))
 model_dir = path / 'models'
 infer_dir = path / 'inference'
 
-default_model = sorted(model_dir.glob('*.pkl'), reverse=True)[0]
-default_model = f'{default_model.stem}{default_model.suffix}'
+# default_model = sorted(model_dir.glob('*.pkl'), reverse=True)[0]
+# default_model = f'{default_model.stem}{default_model.suffix}'
+# default_model = '20210307_1002.pkl'
+default_model = '20210317_2332_norm.pkl.pth'
 
 
 def alpha_mask(originals, predictions):
@@ -27,6 +29,7 @@ def alpha_mask(originals, predictions):
 class HedgieFinder():
     def __init__(self, video, model_name=default_model, fps=2, cleanup=True):
         self.video = Path(video)
+        print(f"Using model: {model_dir/model_name}")
         self.model = load_learner(model_dir/model_name)
         originals = make_temp_pngs(video, fps=fps) if video.suffix == '.mp4' else video.parent
         self.originals_dir = originals

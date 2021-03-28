@@ -59,3 +59,13 @@ from hedgiefinder import predict_overlay_url
 - option for overlay or segmentation
 - could host using digital ocean again: https://cloud.digitalocean.com/droplets/new?i=f7a007&size=s-4vcpu-8gb&region=sfo3
 - Alternatively can checkout this blog: <https://towardsdatascience.com/deploy-machine-learning-model-on-google-kubernetes-engine-94daac85108b>
+
+<https://github.com/fastai/fastai/issues/1482>
+
+## Running Docker
+
+ `docker run --ipc=host --gpus all -p 8888:8888 fastdotai/fastai ./run_jupyter.sh`
+
+ got errors if I didn't have `ipc==host`
+
+ to use gpus needed a [special wsl nvidia cuda drivers installed](https://developer.nvidia.com/cuda/wsl/download)

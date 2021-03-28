@@ -5,12 +5,8 @@ from PIL import Image
 import numpy as np
 from pathlib import Path
 
-imdir = Path(r'D:/Dev/hedgehog_finder/data/test/images')
+imdir = Path(r'data/test/images')
 imlist = list(imdir.rglob('*.png'))
-
-# mskdir = Path(r'D:/Dev/hedgehog_finder/data/train/labels')
-# msklist = list(mskdir.rglob('*.png'))
-
 
 
 def main():
