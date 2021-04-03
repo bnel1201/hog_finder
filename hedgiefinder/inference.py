@@ -1,7 +1,10 @@
 # %%
 import os
-from fastai.vision.all import *
+import pathlib
 from shutil import rmtree
+import platform
+
+from fastai.vision.all import *
 import nrrd
 from scipy.ndimage.interpolation import zoom
 from .overlays import insert_image, download, get_center, get_orientation
@@ -13,10 +16,14 @@ path = Path(os.path.dirname(__file__))
 model_dir = path / 'models'
 infer_dir = path / 'inference'
 
+
+plt = platform.system()
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
+
 # default_model = sorted(model_dir.glob('*.pkl'), reverse=True)[0]
 # default_model = f'{default_model.stem}{default_model.suffix}'
-# default_model = '20210307_1002.pkl'
-default_model = '20210317_2332_norm.pkl.pth'
+default_model = '20210307_1002.pkl'
+# default_model = '20210317_2332_norm.pkl.pth'
 
 
 def alpha_mask(originals, predictions):
